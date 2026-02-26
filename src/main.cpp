@@ -6,9 +6,9 @@
 #include <bn_sprite_ptr.h>
 #include <bn_vector.h>
 #include "movement.h"
+#include "Center.h"
 
 #include "bn_sprite_items_dot.h"
-#include "bn_sprite_items_square.h"
 
 // A scaling factor by which to reduce the force applied when orbiting
 // Important for numerical stability
@@ -20,46 +20,6 @@ static constexpr int MAX_ORBITERS = 30;
 // Default starting posiiton and velocity for Orbiter
 static constexpr bn::fixed_point ORBITER_START_POSIITON = {0, 0};
 static constexpr bn::fixed_point ORBITER_START_VELOCITY = {0, 5};
-
-
-
-
-class Center {
-    public:
-        /**
-         * Creates a new center.
-         * 
-         * @param starting_position the initial location of the center
-         * @param mass the mass of the center. The larger the value, the greater the attraction
-         * @param speed the speed at which the center moves when the d-pad is held
-         */
-        Center(bn::fixed_point starting_position, bn::fixed mass, bn::fixed speed) : 
-            _sprite(bn::sprite_items::square.create_sprite(starting_position)),
-            _mass(mass),
-            _speed(speed) {
-        }
-
-        /**
-         * Updates the location of the Center based on player direction with the d-pad.
-         */
-        void update() {
-            dPadMoveSprite(_sprite, _speed);
-        }
-
-        bn::fixed_point position() {
-            return _sprite.position();
-        }
-
-        bn::fixed mass() {
-            return _mass;
-        }
-
-    private:
-        bn::sprite_ptr _sprite;
-        bn::fixed _mass; // the mass of the center. The larger the value, the greater the attraction
-        bn::fixed _speed; //the speed at which the center moves when the d-pad is held
-};
-
 
 
 /**
